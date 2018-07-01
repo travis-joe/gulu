@@ -1,11 +1,12 @@
 {
-  "name": "@hungerValley/gulu-ui",
+  "name": "gulu-ui-test",
   "version": "0.0.1",
   "description": "方方的gulu",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "dev-test": "parcel watch test/* --no-cache & karma start",
-    "test": "parcel build test/* --no-cache --no-minify && karma start --single-run"
+    "test": "parcel build test/* --no-cache --no-minify && karma start --single-run",
+    "build": "parcel build index.js ---no-cache -no-minify"
   },
   "author": "",
   "license": "ISC",
