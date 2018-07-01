@@ -11,7 +11,7 @@
 <script>
   import Icon from './icon';
   export default {
-    comments: {
+    components: {
       'g-icon': Icon
     },
     props: {
