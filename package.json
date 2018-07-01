@@ -1,7 +1,7 @@
 {
-  "name": "gulu-demo",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@hungerValley/gulu-ui",
+  "version": "0.0.1",
+  "description": "方方的gulu",
   "main": "index.js",
   "scripts": {
     "dev-test": "parcel watch test/* --no-cache & karma start",
