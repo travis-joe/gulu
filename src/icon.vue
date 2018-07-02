@@ -5,14 +5,15 @@
 </template>
 
 <script>
+  import "./svg";
   export default {
-    props: ['name']
-  }
+    props: ["name"]
+  };
 </script>
 
 <style scoped lang="scss">
     .g-icon {
         width: 1em;
-        height: 1em
+        height: 1em;
     }
 </style>
