@@ -35,20 +35,25 @@
 </head>
 <body>
 <div id="app">
-    <g-button :loading="loading1" @click="loading1 = !loading1">
-        按钮
-    </g-button>
-    <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
-        按钮
-    </g-button>
-    <g-button icon="settings" icon-position="left" :loading="true">
-        按钮
-    </g-button>
-    <g-button-group>
-        <g-button icon="left" icon-position="left">上一页</g-button>
-        <g-button icon="right" icon-position="right">下一页</g-button>
-    </g-button-group>
-
+    <g-input value="李逵"></g-input>
+    <g-input value="李逵" disable></g-input>
+    <g-input value="李逵" readonly></g-input>
+    <g-input value="李逵" error="格式错误"></g-input>
+    <div style="margin: 10px;">
+        <g-button :loading="loading1" @click="loading1 = !loading1">
+            按钮
+        </g-button>
+        <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
+            按钮
+        </g-button>
+        <g-button icon="settings" icon-position="left" :loading="true">
+            按钮
+        </g-button>
+        <g-button-group>
+            <g-button icon="left" icon-position="left">上一页</g-button>
+            <g-button icon="right" icon-position="right">下一页</g-button>
+        </g-button-group>
+    </div>
     <div id="test">
 
     </div>
