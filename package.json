@@ -6,7 +6,8 @@
   "scripts": {
     "dev-test": "parcel watch test/* --no-cache & karma start",
     "test": "parcel build test/* --no-cache --no-minify && karma start --single-run",
-    "build": "parcel build index.js --no-cache --no-minify"
+    "build": "parcel build index.js --no-cache --no-minify",
+    "dev": "npx parcel index.html --no-cache"
   },
   "author": "",
   "license": "ISC",
