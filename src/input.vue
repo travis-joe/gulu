@@ -55,6 +55,6 @@
             > input {border-color: $red;}
         }
         .icon-error {fill: $red;}
-        .errorMessage {color: $red;}
+        .errorMessage {color: $red; font-size: 12px}
     }
 </style>
