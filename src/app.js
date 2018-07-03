@@ -12,6 +12,7 @@ new Vue({
   el: "#app",
   data: {
     loading1: true,
+    message: 'Hi',
   },
   methods: {
     inputChange(e) {
