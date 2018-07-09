@@ -35,6 +35,22 @@
 </head>
 <body>
 <div id="app">
+    <div style="border: 1px solid #ccc">
+        <g-row gutter="10">
+            <g-col></g-col>
+            <g-col></g-col>
+        </g-row>
+        <g-row gutter="10">
+            <g-col span="4" offset="4"></g-col>
+            <g-col span="6" offset="2"></g-col>
+            <g-col span="6" offset="2"></g-col>
+        </g-row>
+        <g-row gutter="10">
+            <g-col span="2"></g-col>
+            <g-col span="20" offset="2"></g-col>
+        </g-row>
+    </div>
+
     <g-input value="李逵" @change="inputChange" v-model="message"></g-input>
     <g-input value="李逵" disabled></g-input>
     <g-input value="李逵" readonly></g-input>
