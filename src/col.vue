@@ -64,7 +64,7 @@
 
 <style scoped lang="scss">
     .col {
-        height: 100px;
+        heigh t: 100px;
         $prefix: col-;
         @for $n from 1 through 24 {
             &.#{$prefix}#{$n} {
