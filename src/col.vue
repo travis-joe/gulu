@@ -27,39 +27,29 @@
         gutter: 0,
       }
     },
+    methods: {
+      createClasses (obj, string='') {
+        if(!obj) {return []}
+        let array = []
+        if(obj.span) {
+          array.push(`col-${string}${string&&'-'}${obj.span}`)
+        }
+        if(obj.offset) {
+          array.push(`col-${string}${string&&'-'}${obj.offset}`)
+        }
+        return array;
+      }
+    },
     computed: {
       colClass() {
-        const {span, offset, phone, ipad, narrowPc, pc, widePc} = this;
-        let phoneClass = [];
-        let ipadClass = [];
-        let narrowPcClass = [];
-        let pcClass = [];
-        let widePcClass = [];
-        if (phone) {
-          phoneClass = [`col-phone-${phone.span}`]
-        }
-
-        if (ipad) {
-          ipadClass = [`col-ipad-${ipad.span}`, `offset-ipad-${ipad.offset}`]
-        }
-        if (narrowPc) {
-          narrowPcClass = [`col-narrowPc-${narrowPc.span}`, `offset-narrowPc-${narrowPc.offset}`]
-        }
-        if (pc) {
-          pcClass = [`col-pc-${pc.span}`, `offset-pc-${pc.offset}`]
-        }
-        if (widePc) {
-          widePcClass = [`col-widePc-${widePc.span}`, `offset-widePc-${widePc.offset}`]
-        }
+        const {span, offset, phone, ipad, narrowPc, pc, widePc,createClasses} = this;
 
         return [
-          span && `col-${span}`,
-          offset && `offset-${offset}`,
-          ...phoneClass,
-          ...ipadClass,
-          ...narrowPcClass,
-          ...pcClass,
-          ...widePcClass
+          ...createClasses({span, offset}),
+          ...createClasses(ipad,'ipad'),
+          ...createClasses(narrowPc,'narrowPc'),
+          ...createClasses(pc,'pc'),
+          ...createClasses(widePc,'widePc'),
         ]
       },
       colStyle() {
