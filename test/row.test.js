@@ -5,7 +5,7 @@ import Col from '../src/col'
 Vue.config.productionTip = false
 Vue.config.devtools = false
 
-describe('Input', () => {
+describe('Row', () => {
   it('存在.', () => {
     expect(Row).to.exist
   })
@@ -38,7 +38,7 @@ describe('Input', () => {
     })
   })
 
-  it('接受align属性',(done) => {
+  it('接受align属性',() => {
     const Constructor = Vue.extend(Row);
     const div = document.createElement('div');
     document.body.appendChild(div);
