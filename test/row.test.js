@@ -33,6 +33,23 @@ describe('Input', () => {
       expect(getComputedStyle(cols[0]).paddingRight).to.eq('10px')
       expect(getComputedStyle(cols[1]).paddingLeft).to.eq('10px')
       done()
+      vm.$el.remove()
+      vm.$destroy();
     })
+  })
+
+  it('接受align属性',(done) => {
+    const Constructor = Vue.extend(Row);
+    const div = document.createElement('div');
+    document.body.appendChild(div);
+    const vm = new Constructor({
+      propsData: {
+        align: 'center'
+      }
+    }).$mount(div)
+    const element = vm.$el;
+    expect(getComputedStyle(element).justifyContent).to.equal('center');
+    vm.$el.remove()
+    vm.$destroy();
   })
 })
