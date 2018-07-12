@@ -24,23 +24,28 @@
             --border-color-hover: #666;
         }
 
-        #app {
-            margin: 20px;
-        }
-
         body {
             font-size: var(--font-size);
         }
         .demo {
             background: #dddddd;
             border: 1px solid #666666;
-            height: 100px;
+            min-height: 100px;
         }
     </style>
 </head>
 <body>
 <div id="app">
     <div style="border: 1px solid #ccc">
+        <g-layout style="height:100vh">
+            <g-header class="demo">header</g-header>
+            <g-layout>
+                <g-sider class="demo">sider</g-sider>
+                <g-content  class="demo">content</g-content>
+            </g-layout>
+
+            <g-footer  class="demo">footer</g-footer>
+        </g-layout>
         <g-row>
             <g-col span="23" offset="1" :ipad="{span:10, offset: 2}" :narrow-pc="{span:8}">
                 <div class="demo"></div>
