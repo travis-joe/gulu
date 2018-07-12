@@ -9,7 +9,9 @@
 </template>
 
 <script>
-  let validator = (value) => Object.keys(value).every(val => ['span', 'offset'].includes(val))
+  let validator = value =>
+      Object.keys(value).every(val =>
+          ['span', 'offset'].includes(val))
 
   export default {
     name: "GuluCol",
