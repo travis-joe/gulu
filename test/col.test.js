@@ -18,8 +18,9 @@ describe('Col', () => {
         span: 1
       }
     }).$mount(div)
+    console.log(vm.$el.classList)
     expect(vm.$el.classList.contains('col-1')).to.eq(true);
-    vm.$el.remove()
+    div.remove()
     vm.$destroy();
   })
   it('接受 offset 属性',() => {
@@ -28,11 +29,12 @@ describe('Col', () => {
     document.body.appendChild(div);
     const vm = new Constructor({
       propsData: {
-        offset: 1
+        offset: "1"
       }
     }).$mount(div)
+    console.log(vm.$el.classList)
     expect(vm.$el.classList.contains('offset-1')).to.eq(true);
-    vm.$el.remove()
+    div.remove()
     vm.$destroy();
   })
   it('接受 pc 属性',() => {
@@ -46,7 +48,7 @@ describe('Col', () => {
     }).$mount(div)
     expect(vm.$el.classList.contains('col-pc-1')).to.eq(true);
     expect(vm.$el.classList.contains('offset-pc-2')).to.eq(true);
-    vm.$el.remove()
+    div.remove()
     vm.$destroy();
   })
   it('接受 ipad 属性',() => {
@@ -60,7 +62,7 @@ describe('Col', () => {
     }).$mount(div)
     expect(vm.$el.classList.contains('col-ipad-1')).to.eq(true);
     expect(vm.$el.classList.contains('offset-ipad-2')).to.eq(true);
-    vm.$el.remove()
+    div.remove()
     vm.$destroy();
   })
   it('接受 narrow-pc 属性',() => {
@@ -74,7 +76,7 @@ describe('Col', () => {
     }).$mount(div)
     expect(vm.$el.classList.contains('col-narrowPc-1')).to.eq(true);
     expect(vm.$el.classList.contains('offset-narrowPc-2')).to.eq(true);
-    vm.$el.remove()
+    div.remove()
     vm.$destroy();
   })
   it('接受 wide-pc 属性',() => {
@@ -88,7 +90,7 @@ describe('Col', () => {
     }).$mount(div)
     expect(vm.$el.classList.contains('col-widePc-1')).to.eq(true);
     expect(vm.$el.classList.contains('offset-widePc-2')).to.eq(true);
-    vm.$el.remove()
+    div.remove()
     vm.$destroy();
   })
 })

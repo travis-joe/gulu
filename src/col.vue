@@ -31,11 +31,12 @@
       createClasses (obj, string='') {
         if(!obj) {return []}
         let array = []
+
         if(obj.span) {
           array.push(`col-${string}${string&&'-'}${obj.span}`)
         }
         if(obj.offset) {
-          array.push(`col-${string}${string&&'-'}${obj.offset}`)
+          array.push(`offset-${string}${string&&'-'}${obj.offset}`)
         }
         return array;
       }
