@@ -36,6 +36,22 @@
 </head>
 <body>
 <div id="app">
+    <div style="margin: 10px;">
+        <g-button :loading="loading1" @click="showToast">
+            按钮
+        </g-button>
+        <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
+            按钮
+        </g-button>
+        <g-button icon="settings" icon-position="left" :loading="true">
+            按钮
+        </g-button>
+        <g-button-group>
+            <g-button icon="left" icon-position="left">上一页</g-button>
+            <g-button icon="right" icon-position="right">下一页</g-button>
+        </g-button-group>
+    </div>
+
     <div style="border: 1px solid #ccc">
         <g-layout style="height:100vh">
             <g-header class="demo">header</g-header>
@@ -78,24 +94,7 @@
     <g-input value="李逵" disabled></g-input>
     <g-input value="李逵" readonly></g-input>
     <g-input value="李逵" error="格式错误"></g-input>
-    <div style="margin: 10px;">
-        <g-button :loading="loading1" @click="loading1 = !loading1">
-            按钮
-        </g-button>
-        <g-button icon="settings" icon-position="right" :loading="loading1" @click="loading1 = !loading1">
-            按钮
-        </g-button>
-        <g-button icon="settings" icon-position="left" :loading="true">
-            按钮
-        </g-button>
-        <g-button-group>
-            <g-button icon="left" icon-position="left">上一页</g-button>
-            <g-button icon="right" icon-position="right">下一页</g-button>
-        </g-button-group>
-    </div>
-    <div id="test">
 
-    </div>
 </div>
 <script src="./src/app.js"></script>
 </body>
