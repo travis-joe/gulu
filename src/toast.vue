@@ -30,7 +30,7 @@
     },
     mounted() {
       if (this.autoClose) {
-        setTimeout(() => {
+        this.timeOut = setTimeout(() => {
           this.onClickClose()
         }, this.autoCloseDelay * 1000)
       }
@@ -41,43 +41,44 @@
         this.$destroy()
       },
       onClickClose() {
-        this.close()
         if (this.closeButton && typeof this.closeButton.callback === 'function') {
-          this.closeButton.callback(this) //this当前toast实力
+          this.closeButton.callback(this) //this当前toast实例
         }
+        this.close()
+        clearTimeout(this.timeOut)
       }
     }
   };
 </script>
 
 <style scoped lang="scss">
-    $font-size: 14px;
-    $toast-height: 40px;
-    $toast-bg: rgba(0, 0, 0, .75);
-    .toast {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: $font-size;
-        line-height: 1.8;
-        height: $toast-height;
-        display: flex;
-        align-items: center;
-        background: $toast-bg;
-        border-radius: 4px;
-        box-shadow: 0 0 3px 0 rgba(0, 0, 0, .5);
-        color: #fff;
-        padding: 0 16px;
-    }
+$font-size: 14px;
+$toast-height: 40px;
+$toast-bg: rgba(0, 0, 0, 0.75);
+.toast {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: $font-size;
+  line-height: 1.8;
+  height: $toast-height;
+  display: flex;
+  align-items: center;
+  background: $toast-bg;
+  border-radius: 4px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 0 16px;
+}
 
-    .close {
-        padding-left: 16px;
-    }
+.close {
+  padding-left: 16px;
+}
 
-    .line {
-        height: $toast-height;
-        border-left: 1px solid #666;
-        margin-left: 16px;
-    }
+.line {
+  height: $toast-height;
+  border-left: 1px solid #666;
+  margin-left: 16px;
+}
 </style>
