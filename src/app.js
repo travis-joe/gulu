@@ -35,7 +35,8 @@ new Vue({
       console.log(e)
     },
     showToast() {
-      this.$toast('<p>我是toast</p><p>我是toast</p><p>我是toast</p><p>我是toast</p><p>我是toast</p>', {
+      this.$toast(`<p>${parseInt(Math.random()*100)}</p><p>我是toast</p>`, {
+        position:'bottom',
         enableHtml: true,
         closeButton:{
           text: '好的',
