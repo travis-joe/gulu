@@ -23,9 +23,7 @@
         default() {
           return {
             text: '关闭',
-            callback: (toast) => {
-              toast.close();
-            }
+            callback: undefined
           }
         }
       },
@@ -44,7 +42,9 @@
       },
       onClickClose() {
         this.close()
-        this.closeButton.callback()
+        if (this.closeButton && typeof this.closeButton.callback === 'function') {
+          this.closeButton.callback(this) //this当前toast实力
+        }
       }
     }
   };
@@ -70,10 +70,12 @@
         color: #fff;
         padding: 0 16px;
     }
-    .close{
+
+    .close {
         padding-left: 16px;
     }
-    .line{
+
+    .line {
         height: $toast-height;
         border-left: 1px solid #666;
         margin-left: 16px;
