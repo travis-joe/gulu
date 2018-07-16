@@ -7,7 +7,16 @@ export default {
   install(Vue, options) {
     Vue.prototype.$toast = function (message) {
       let constructor = Vue.extend(Toast)
-      let toast = new constructor()
+      let toast = new constructor({
+        propsData:{
+          closeButton:{
+            text: '好的',
+            callback:()=>{
+              console.log('好的关了吧')
+            }
+          }
+        }
+      })
       toast.$slots.default = [message]
       toast.$mount()
 
