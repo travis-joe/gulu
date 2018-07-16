@@ -1,7 +1,10 @@
 <template>
     <div class="toast" ref="wrapper">
-        <slot v-if="!enableHtml"></slot>
-        <div v-else v-html="$slots.default[0]"></div>
+        <div class="message">
+            <slot v-if="!enableHtml"></slot>
+            <div v-else v-html="$slots.default[0]"></div>
+        </div>
+
 
         <div class="line" ref="line"></div>
         <span class="close" v-if="closeButton" @click="onClickClose">{{closeButton.text}}</span>
@@ -35,17 +38,22 @@
       },
     },
     mounted() {
-      if (this.autoClose) {
-        this.timeOut = setTimeout(() => {
-          this.onClickClose()
-        }, this.autoCloseDelay * 1000)
-      }
-      this.$nextTick(() => {
-        this.$refs.line.style.height = this.$refs.wrapper.getBoundingClientRect().height + 'px';
-      })
-      
+      this.updateStyle();
+      this.execAutoClose();
     },
     methods: {
+      execAutoClose(){
+        if (this.autoClose) {
+          this.timeOut = setTimeout(() => {
+            this.onClickClose()
+          }, this.autoCloseDelay * 1000)
+        }
+      },
+      updateStyle(){
+        this.$nextTick(() => {
+          this.$refs.line.style.height = this.$refs.wrapper.getBoundingClientRect().height + 'px';
+        })
+      },
       close() {
         this.$el.remove()
         this.$destroy()
@@ -90,5 +98,8 @@
     .line {
         border-left: 1px solid #666;
         margin-left: 16px;
+    }
+    .message{
+        padding: 8px 0;
     }
 </style>
