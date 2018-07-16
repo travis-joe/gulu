@@ -35,7 +35,8 @@ new Vue({
       console.log(e)
     },
     showToast() {
-      this.$toast('我是toast', {
+      this.$toast('<p>我是toast</p><p>我是toast</p><p>我是toast</p><p>我是toast</p><p>我是toast</p>', {
+        enableHtml: true,
         closeButton:{
           text: '好的',
           callback:(toast)=>{
