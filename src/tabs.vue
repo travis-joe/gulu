@@ -33,6 +33,7 @@
       }
     },
     mounted() {
+      console.log('tabs发出事件')
       this.eventBus.$emit('update:selected', this.selected)
     }
   }

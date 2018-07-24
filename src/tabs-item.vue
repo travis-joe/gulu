@@ -32,6 +32,7 @@
     },
     created() {
       this.eventBus.$on('update:selected', name => {
+        console.log('items接受到事件了')
         this.active = name === this.name;
       })
     },
