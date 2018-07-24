@@ -30,7 +30,7 @@
       const tabItems = this.tabsChildren.map(tab => <TabItem name={tab.key}>{tab.attrs.tab}</TabItem>);
       const tabpanes = this.tabsChildren.map(tab => <TabPane name={tab.key}>{tab.content}</TabPane>);
       return (
-          <Tabs selected$sync={this.selected}>
+          <Tabs selected={this.selected}>
             <TabHead>
               {tabItems}
             </TabHead>
