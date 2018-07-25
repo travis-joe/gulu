@@ -43,7 +43,6 @@
     beforeMount() {
       this.$slots.default.map(slot => {
         if (slot.tag === 'g-tab-pane') {
-          console.log(slot)
           let {key, attrs} = slot.data
           const content = slot.children
           if(attrs.disabled === "") {

@@ -33,7 +33,16 @@
       }
     },
     mounted() {
-      this.eventBus.$emit('update:selected', this.selected, this)
+      this.$children.forEach(vm => {
+        if(vm.$el.className === 'tabs-head'){
+          vm.$children.forEach(child => {
+            if(child.name === this.selected) {
+              this.eventBus.$emit('update:selected', this.selected, child)
+            }
+          })
+        }
+      })
+
     }
   }
 </script>
