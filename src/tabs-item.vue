@@ -26,30 +26,41 @@
     computed: {
       classes() {
         return {
-          active: this.active
+          active: this.active,
+          disabled: this.disabled,
         }
       }
     },
     created() {
       this.eventBus.$on('update:selected', name => {
-        console.log('items接受到事件了')
         this.active = name === this.name;
       })
     },
     methods: {
       change() {
-        this.eventBus.$emit('update:selected', this.name)
+        if(this.disabled) { return }
+        this.eventBus.$emit('update:selected', this.name, this)
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
+    $blue: #1890ff;
     .tabs-item {
         flex-shrink: 0;
         padding: 0 2em;
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        align-items: center;
         &.active{
-            background: red;
+            color: $blue;
+            font-weight: bold;
+        }
+        &.disabled{
+            color: #ddd;
+            cursor: not-allowed;
         }
     }
 </style>

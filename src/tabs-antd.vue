@@ -27,7 +27,7 @@
       }
     },
     render(h) {
-      const tabItems = this.tabsChildren.map(tab => <TabItem name={tab.key}>{tab.attrs.tab}</TabItem>);
+      const tabItems = this.tabsChildren.map(tab => <TabItem name={tab.key} disabled={tab.attrs.disabled}>{tab.attrs.tab}</TabItem>);
       const tabpanes = this.tabsChildren.map(tab => <TabPane name={tab.key}>{tab.content}</TabPane>);
       return (
           <Tabs selected={this.selected}>
@@ -43,8 +43,12 @@
     beforeMount() {
       this.$slots.default.map(slot => {
         if (slot.tag === 'g-tab-pane') {
-          const {key, attrs} = slot.data
+          console.log(slot)
+          let {key, attrs} = slot.data
           const content = slot.children
+          if(attrs.disabled === "") {
+            attrs.disabled = true
+          }
           this.tabsChildren.push({key, attrs, content})
         }
       })
