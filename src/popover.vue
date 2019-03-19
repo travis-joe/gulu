@@ -1,9 +1,9 @@
 <template>
-    <div class="popover" @click="onClick">
-        <div ref="contentWrapper" class="content-wrapper" v-if="visible" >
+    <div class="popover" @click="onClick" ref="popover">
+        <div ref="contentWrapper" class="content-wrapper" v-if="visible">
             <slot name="content"></slot>
         </div>
-        <span ref="triggerWrapper">
+        <span ref="triggerWrapper" class="trigger-wrapper">
             <slot></slot>
         </span>
     </div>
@@ -16,26 +16,39 @@
       return {visible: false}
     },
     methods: {
-      onClick() {
-        this.visible = !this.visible
-        let hide = () => {
-          this.visible = false;
-          document.removeEventListener('click', hide)
-          console.log('来自hide的关闭')
-        }
-        if (this.visible === true) {
-          this.$nextTick(() => {
-            document.body.appendChild(this.$refs.contentWrapper)
-            let {width, height, top, left} = this.$refs.triggerWrapper.getBoundingClientRect();
-            this.$refs.contentWrapper.style.left = left+window.scrollX + 'px'
-            this.$refs.contentWrapper.style.top = top+window.scrollY + 'px'
-            document.addEventListener('click', hide)
-          })
+      positionContent: function () {
+        let {top, left} = this.$refs.triggerWrapper.getBoundingClientRect();
+        this.$refs.contentWrapper.style.left = left + window.scrollX + 'px'
+        this.$refs.contentWrapper.style.top = top + window.scrollY + 'px'
+        document.body.appendChild(this.$refs.contentWrapper)
+      },
+      onClickDocument(e) {
+        if (this.$refs.popover === e.target || this.$refs.contentWrapper.contains(e.target)) {
+          return
         } else {
-          setTimeout(() => {
-            console.log('关闭')
-            document.removeEventListener('click', hide)
-          })
+          this.close();
+        }
+      },
+      open() {
+        console.log('打开')
+        this.visible = true
+        this.$nextTick(() => {
+          this.positionContent();
+          document.addEventListener('click', this.onClickDocument)
+        })
+      },
+      close() {
+        this.visible = false
+        document.removeEventListener('click', this.onClickDocument)
+        console.log('关闭')
+      },
+      onClick(event) {
+        if (this.$refs.triggerWrapper.contains(event.target)) {
+          if (this.visible === true) {
+            this.close()
+          } else {
+            this.open();
+          }
         }
       }
     },
@@ -47,7 +60,11 @@
         display: inline-block;
         vertical-align: top;
         position: relative;
+        .trigger-wrapper{
+            cursor: pointer;
+        }
     }
+
     .content-wrapper {
         position: absolute;
         border: 1px solid red;

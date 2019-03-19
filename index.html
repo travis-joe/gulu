@@ -40,105 +40,107 @@
 <body>
 <div id="app">
     <div id="app" style="padding-top: 100px; padding-left: 100px;">
-    <g-popover>
-        <template slot="content">
-            <div>popover内容</div>
-        </template>
-        <button>点我</button>
-    </g-popover>
-    <g-popover>
-        <template slot="content">
-            <div>popover内容</div>
-        </template>
-        <button>点我</button>
-    </g-popover>
+        <div style="overflow: hidden;padding: 5px;">
+            <g-popover>
+                <template slot="content">
+                    <div>popover内容</div>
+                </template>
+                <button>点我</button>
+            </g-popover>
+            <g-popover>
+                <template slot="content">
+                    <div>popover内容</div>
+                </template>
+                <button>点我</button>
+            </g-popover>
+        </div>
     </div>
 
     <!--<g-tabs-antd :selected="selectedTab">-->
-        <!--<g-tab-pane tab="美女" key="beauty" disabled>美女相关内容</g-tab-pane>-->
-        <!--<g-tab-pane tab="财经" key="finance">财经相关内容</g-tab-pane>-->
-        <!--<g-tab-pane tab="体育" key="sports">体育相关内容</g-tab-pane>-->
+    <!--<g-tab-pane tab="美女" key="beauty" disabled>美女相关内容</g-tab-pane>-->
+    <!--<g-tab-pane tab="财经" key="finance">财经相关内容</g-tab-pane>-->
+    <!--<g-tab-pane tab="体育" key="sports">体育相关内容</g-tab-pane>-->
     <!--</g-tabs-antd>-->
 
     <!--<g-tabs :selected.sync="selectedTab">-->
-        <!--<g-tabs-head>-->
-            <!--<template slot="actions"-->
-            <!--&gt;设置-->
-            <!--</template-->
-            <!--&gt;-->
-            <!--<g-tabs-item name="beauty" disabled>美女</g-tabs-item>-->
-            <!--<g-tabs-item name="finance">财经</g-tabs-item>-->
-            <!--<g-tabs-item name="sports">体育</g-tabs-item>-->
-        <!--</g-tabs-head>-->
-        <!--<g-tabs-body>-->
-            <!--<g-tabs-pane name="beauty">美女相关内容</g-tabs-pane>-->
-            <!--<g-tabs-pane name="finance">财经相关内容</g-tabs-pane>-->
-            <!--<g-tabs-pane name="sports">体育相关内容</g-tabs-pane>-->
-        <!--</g-tabs-body>-->
+    <!--<g-tabs-head>-->
+    <!--<template slot="actions"-->
+    <!--&gt;设置-->
+    <!--</template-->
+    <!--&gt;-->
+    <!--<g-tabs-item name="beauty" disabled>美女</g-tabs-item>-->
+    <!--<g-tabs-item name="finance">财经</g-tabs-item>-->
+    <!--<g-tabs-item name="sports">体育</g-tabs-item>-->
+    <!--</g-tabs-head>-->
+    <!--<g-tabs-body>-->
+    <!--<g-tabs-pane name="beauty">美女相关内容</g-tabs-pane>-->
+    <!--<g-tabs-pane name="finance">财经相关内容</g-tabs-pane>-->
+    <!--<g-tabs-pane name="sports">体育相关内容</g-tabs-pane>-->
+    <!--</g-tabs-body>-->
     <!--</g-tabs>-->
 
     <!--<div style="margin: 10px;">-->
-        <!--<g-button :loading="loading1" @click="showToast">-->
-            <!--按钮-->
-        <!--</g-button>-->
-        <!--<g-button-->
-                <!--icon="settings"-->
-                <!--icon-position="right"-->
-                <!--:loading="loading1"-->
-                <!--@click="loading1 = !loading1"-->
-        <!--&gt;-->
-            <!--按钮-->
-        <!--</g-button>-->
-        <!--<g-button icon="settings" icon-position="left" :loading="true">-->
-            <!--按钮-->
-        <!--</g-button>-->
-        <!--<g-button-group>-->
-            <!--<g-button icon="left" icon-position="left">上一页</g-button>-->
-            <!--<g-button icon="right" icon-position="right">下一页</g-button>-->
-        <!--</g-button-group>-->
+    <!--<g-button :loading="loading1" @click="showToast">-->
+    <!--按钮-->
+    <!--</g-button>-->
+    <!--<g-button-->
+    <!--icon="settings"-->
+    <!--icon-position="right"-->
+    <!--:loading="loading1"-->
+    <!--@click="loading1 = !loading1"-->
+    <!--&gt;-->
+    <!--按钮-->
+    <!--</g-button>-->
+    <!--<g-button icon="settings" icon-position="left" :loading="true">-->
+    <!--按钮-->
+    <!--</g-button>-->
+    <!--<g-button-group>-->
+    <!--<g-button icon="left" icon-position="left">上一页</g-button>-->
+    <!--<g-button icon="right" icon-position="right">下一页</g-button>-->
+    <!--</g-button-group>-->
     <!--</div>-->
 
     <!--<div style="border: 1px solid #ccc">-->
-        <!--<g-layout style="height:100vh">-->
-            <!--<g-header class="demo">header</g-header>-->
-            <!--<g-layout>-->
-                <!--<g-sider class="demo">sider</g-sider>-->
-                <!--<g-content class="demo">content</g-content>-->
-            <!--</g-layout>-->
+    <!--<g-layout style="height:100vh">-->
+    <!--<g-header class="demo">header</g-header>-->
+    <!--<g-layout>-->
+    <!--<g-sider class="demo">sider</g-sider>-->
+    <!--<g-content class="demo">content</g-content>-->
+    <!--</g-layout>-->
 
-            <!--<g-footer class="demo">footer</g-footer>-->
-        <!--</g-layout>-->
-        <!--<g-row>-->
-            <!--<g-col-->
-                    <!--span="23"-->
-                    <!--offset="1"-->
-                    <!--:ipad="{span:10, offset: 2}"-->
-                    <!--:narrow-pc="{span:8}"-->
-            <!--&gt;-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-            <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
-                <!--<div class="demo"></div>-->
-            <!--</g-col>-->
-        <!--</g-row>-->
+    <!--<g-footer class="demo">footer</g-footer>-->
+    <!--</g-layout>-->
+    <!--<g-row>-->
+    <!--<g-col-->
+    <!--span="23"-->
+    <!--offset="1"-->
+    <!--:ipad="{span:10, offset: 2}"-->
+    <!--:narrow-pc="{span:8}"-->
+    <!--&gt;-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--<g-col span="24" :ipad="{span:12}" :narrow-pc="{span:8}">-->
+    <!--<div class="demo"></div>-->
+    <!--</g-col>-->
+    <!--</g-row>-->
     <!--</div>-->
 
     <!--<g-input value="李逵" @change="inputChange" v-model="message"></g-input>-->
