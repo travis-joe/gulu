@@ -30,7 +30,6 @@
         }
       },
       open() {
-        console.log('打开')
         this.visible = true
         this.$nextTick(() => {
           this.positionContent();
