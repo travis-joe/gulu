@@ -1,5 +1,5 @@
 <template>
-    <div class="popover" @click="onClick" ref="popover">
+    <div class="popover" ref="popover">
         <div ref="contentWrapper"
              class="content-wrapper"
              v-if="visible"
@@ -22,10 +22,35 @@
         validator(value) {
           return ['top', 'bottom', 'left', 'right'].indexOf(value) >= 0
         }
-      }
+      },
+      trigger: {
+        type: String,
+        default: 'click',
+        validator(value) {
+          return ['hover', 'click'].indexOf(value) >= 0
+        }
+      },
     },
     data() {
-      return {visible: false}
+      return {
+        visible: false,
+      }
+    },
+    mounted() {
+      if (this.trigger === 'click') {
+        this.$refs.popover.addEventListener('click', this.onClick)
+      } else {
+        this.$refs.popover.addEventListener('mouseenter', this.open)
+        this.$refs.popover.addEventListener('mouseleave', this.close)
+      }
+    },
+    destroyed() {
+      if (this.trigger === 'click') {
+        this.$refs.popover.removeEventListener('click', this.onClick)
+      } else {
+        this.$refs.popover.removeEventListener('mouseenter', this.open)
+        this.$refs.popover.removeEventListener('mouseleave', this.close)
+      }
     },
     methods: {
       positionContent: function () {
@@ -50,7 +75,7 @@
         contentWrapper.style.top = positions[this.position].top + 'px'
       },
       onClickDocument(e) {
-        if (this.$refs.popover === e.target || this.$refs.contentWrapper.contains(e.target)) {
+        if (this.$refs.popover.contains(e.target) || this.$refs.contentWrapper.contains(e.target)) {
           return
         } else {
           this.close();
@@ -60,7 +85,7 @@
         this.visible = true
         this.$nextTick(() => {
           this.positionContent();
-          document.addEventListener('click', this.onClickDocument)
+          this.trigger === 'click' && document.addEventListener('click', this.onClickDocument)
         })
       },
       close() {
@@ -122,11 +147,13 @@
             &::before {
                 border-top-color: $border-color;
                 top: 100%;
+                border-bottom: none;
             }
 
             &::after {
                 border-top-color: white;
                 top: calc(100% - 1px);
+                border-bottom: none;
             }
         }
 
@@ -137,40 +164,51 @@
             &::before {
                 border-bottom-color: $border-color;
                 bottom: 100%;
+                border-top: none;
             }
 
             &::after {
                 border-bottom-color: white;
                 bottom: calc(100% - 1px);
+                border-top: none;
             }
         }
 
         &.position-left {
             transform: translateX(-100%);
             margin-left: -10px;
+
             &::before, &::after {
                 transform: translateY(-50%);
                 top: 50%;
+                border-right: none;
             }
+
             &::before {
-                border-left-color: black;
+                border-left-color: $border-color;
                 left: 100%;
             }
+
             &::after {
                 border-left-color: white;
                 left: calc(100% - 1px);
             }
         }
+
         &.position-right {
             margin-left: 10px;
+
             &::before, &::after {
                 transform: translateY(-50%);
                 top: 50%;
+                border-left: none;
             }
+
             &::before {
-                border-right-color: black;
+                border-right-color: $border-color;
                 right: 100%;
             }
+
             &::after {
                 border-right-color: white;
                 right: calc(100% - 1px);
