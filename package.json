@@ -8,8 +8,8 @@
     "test": "parcel build test/* --no-cache --no-minify && karma start --single-run",
     "build": "parcel build index.js --no-cache --no-minify",
     "dev": "npx parcel index.html --no-cache",
-    "docs-dev": "vuepress dev docs",
-    "docs-build": "vuepress build docs"
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "author": "",
   "license": "MIT",
