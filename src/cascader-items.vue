@@ -1,13 +1,17 @@
 <template>
     <div class="cascaderItems" :style="{height:height}">
+        <div>
+            {{selected}}
+            {{level}}
+        </div>
         <div class="left">
-            <div class="label" v-for="item in items" @click="leftSelected = item">
+            <div class="label" v-for="item in items" @click="onClickLabel(item)">
                 {{item.name}}
                 <icon name="right" v-if="item.children" class="icon"></icon>
             </div>
         </div>
         <div class="right" v-if="rightItems">
-            <Cascader-Items :items="rightItems" :height="height"></Cascader-Items>
+            <Cascader-Items :items="rightItems" :height="height" :level="level + 1"></Cascader-Items>
         </div>
     </div>
 </template>
@@ -24,6 +28,14 @@
       },
       height: {
         type: String
+      },
+      selected: {
+        type: Array,
+        default: () => []
+      },
+      level: {
+        type: Number,
+        default: 0
       }
     },
     data() {
@@ -38,6 +50,11 @@
         } else {
           return null
         }
+      }
+    },
+    methods: {
+      onClickLabel(item) {
+        this.$set(this.selected, this.level, item)
       }
     }
   }

@@ -4,7 +4,12 @@
             <slot></slot>
         </div>
         <div class="popover-wrapper" v-if="popoverVisible">
-            <cascader-items :items="source" class="popover" :height="popoverHeight"></cascader-items>
+            <cascader-items
+                    :items="source"
+                    class="popover"
+                    :height="popoverHeight"
+                    :selected="selected"
+            ></cascader-items>
         </div>
     </div>
 </template>
@@ -21,6 +26,10 @@
       },
       popoverHeight: {
         type: String
+      },
+      selected: {
+        type: Array,
+        default: () => []
       }
     },
     data() {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <p>11111</p>
-        <g-cascader :source="source" popover-height="200px"></g-cascader>
+        <g-cascader :source="source" popover-height="200px" :select="selected"></g-cascader>
         <p>22222</p>
     </div>
 </template>
@@ -16,6 +16,7 @@
     },
     data () {
       return {
+        selected:[],
         source: [
           {
             name: "浙江",
