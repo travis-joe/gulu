@@ -4,19 +4,17 @@
             <slot></slot>
         </div>
         <div class="popover" v-if="popoverVisible">
-            <div v-for="item in source">
-                <cascader-item :sourceItem="item"></cascader-item>
-            </div>
+            <cascader-items :items="source"></cascader-items>
         </div>
     </div>
 </template>
 
 <script>
-  import CascaderItem from './cascader-items'
+  import CascaderItems from './cascader-items'
 
   export default {
     name: "GuluCascader",
-    components: {CascaderItem},
+    components: {CascaderItems},
     props: {
       source: {
         type: Array
@@ -44,7 +42,6 @@
         .popover{
             border: 1px solid $red;
             height: 200px;
-            width: 80px;
         }
     }
 </style>
