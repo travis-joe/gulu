@@ -1,9 +1,5 @@
 <template>
     <div class="cascaderItems" :style="{height:height}">
-        <div>
-            {{selected}}
-            {{level}}
-        </div>
         <div class="left">
             <div class="label" v-for="item in items" @click="onClickLabel(item)">
                 {{item.name}}
@@ -11,7 +7,13 @@
             </div>
         </div>
         <div class="right" v-if="rightItems">
-            <Cascader-Items :items="rightItems" :height="height" :level="level + 1"></Cascader-Items>
+            <Cascader-Items
+                :items="rightItems"
+                :height="height"
+                :level="level + 1"
+                :selected="selected"
+                @update:selected="onUpdateSelected"
+            ></Cascader-Items>
         </div>
     </div>
 </template>
@@ -45,8 +47,9 @@
     },
     computed: {
       rightItems() {
-        if (this.leftSelected && this.leftSelected.children) {
-          return this.leftSelected.children
+        const selectedItems = this.selected[this.level]
+        if (selectedItems && selectedItems.children) {
+          return selectedItems.children
         } else {
           return null
         }
@@ -54,7 +57,13 @@
     },
     methods: {
       onClickLabel(item) {
-        this.$set(this.selected, this.level, item)
+        let copy = JSON.parse(JSON.stringify(this.selected))
+        copy[this.level] = item
+        copy.splice(this.level + 1)
+        this.$emit('update:selected', copy)
+      },
+      onUpdateSelected(selected) {
+        this.$emit('update:selected', selected)
       }
     }
   }
