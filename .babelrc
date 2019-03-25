@@ -1,6 +1,0 @@
-{
-  "presets": [
-    ["env"]
-  ],
-  "plugins": ["vue-jsx-sync", "transform-vue-jsx"]
-}

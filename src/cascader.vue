@@ -47,6 +47,8 @@
             top:100%;
             left:0;
             @extend .box-shadow;
+            background: #fff;
+
         }
     }
 </style>
