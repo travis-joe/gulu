@@ -4,10 +4,8 @@
         <g-cascader
             :source="source"
             popover-height="200px"
-            :selected="selected"
-            @update:selected="selected = $event"
+            :selected.sync="selected"
         >
-
         </g-cascader>
         <p>22222</p>
     </div>
