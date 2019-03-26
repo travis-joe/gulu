@@ -2,9 +2,10 @@
     <div>
         <p>11111</p>
         <g-cascader
-            :source="source"
+            :source.sync="source"
             popover-height="200px"
             :selected.sync="selected"
+            :load-data="loadData"
         >
         </g-cascader>
         <p>22222</p>
@@ -13,65 +14,58 @@
 <script>
   import Button from "./button";
   import Cascader from "./cascader";
+  import db from './db'
+
+
+  function ajax(parentId = 0) {
+    return new Promise((success, fail) => {
+      setTimeout(()=> {
+        success(db.filter( item => item.parent_id === parentId))
+      },0)
+    })
+  }
+
+  // console.log(ajax())
   export default {
     name: "demo",
     components: {
       "g-button": Button,
       "g-cascader": Cascader
     },
-    data () {
+    data() {
       return {
-        selected:[],
-        source: [
-          {
-            name: "浙江",
-            children: [
-              {
-                name: "杭州",
-                children: [{name: "上城"}, {name: "下城"}, {name: "江干"}]
-              },
-              {
-                name: "嘉兴",
-                children: [{name: "南湖"}, {name: "秀洲"}, {name: "嘉善"}]
-              }
-            ]
-          },
-          {
-            name: "福建",
-            children: [
-              {
-                name: "福州",
-                children: [{name: "鼓楼"}, {name: "台江"}, {name: "仓山"}]
-              }
-            ]
-          },
-          {
-            name: "安徽",
-            children: [
-              {
-                name: "合肥",
-                children: [
-                  {
-                    name: "瑶海"
-                  },
-                  {
-                    name: "庐阳"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        selected: [],
+        source: []
       };
+    },
+    created() {
+      ajax(0).then(result => this.source = result)
+    },
+    methods: {
+      loadData(node, callback) {
+        let {name, id, parent_id} = node
+        ajax(id).then(result => {
+          callback(result)
+        })
+      },
+      onSelectedChange() {
+        ajax(this.selected[0].id).then(result => {
+          let lastSelected = this.source.filter(item => item.id === this.selected[0].id)[0]
+          this.$set(lastSelected, 'children', result)
+        })
+      }
     }
   };
 </script>
 <style>
     * {margin: 0; padding: 0; box-sizing: border-box;}
+
     img {max-width: 100%;}
+
     html {
         --font-size: 14px;
     }
+
     body {
         font-size: var(--font-size);
     }
