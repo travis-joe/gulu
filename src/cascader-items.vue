@@ -3,7 +3,7 @@
         <div class="left">
             <div class="label" v-for="item in items" @click="onClickLabel(item)">
                 {{item.name}}
-                <icon name="right" v-if="item.children" class="icon"></icon>
+                <icon name="right" v-if="item.children && item.children.length > 0" class="icon"></icon>
             </div>
         </div>
         <div class="right" v-if="rightItems">
@@ -47,11 +47,11 @@
     },
     computed: {
       rightItems() {
-        const selectedItems = this.selected[this.level]
-        if (selectedItems && selectedItems.children) {
-          return selectedItems.children
-        } else {
-          return null
+        if(this.selected[this.level]) {
+          const selectedItem = this.items.filter(i => i.name === this.selected[this.level].name)
+          if(selectedItem[0] && selectedItem[0].children && selectedItem[0].children.length > 0) {
+            return selectedItem[0].children
+          }
         }
       }
     },

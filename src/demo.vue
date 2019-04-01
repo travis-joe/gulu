@@ -3,8 +3,8 @@
         <p>11111</p>
         <g-cascader
             :source.sync="source"
-            popover-height="200px"
             :selected.sync="selected"
+            popover-height="200px"
             :load-data="loadData"
         >
         </g-cascader>
