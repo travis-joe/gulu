@@ -2,8 +2,8 @@
     <div class="cascaderItems" :style="{height:height}">
         <div class="left">
             <div class="label" v-for="item in items" @click="onClickLabel(item)">
-                {{item.name}}
-                <icon name="right" v-if="item.children && item.children.length > 0" class="icon"></icon>
+                <span class="name">{{item.name}}</span>
+                <icon name="right" v-if="rightArrowVisible(item)" class="icon"></icon>
             </div>
         </div>
         <div class="right" v-if="rightItems">
@@ -13,6 +13,7 @@
                 :level="level + 1"
                 :selected="selected"
                 @update:selected="onUpdateSelected"
+                :loadData="loadData"
             ></Cascader-Items>
         </div>
     </div>
@@ -38,6 +39,9 @@
       level: {
         type: Number,
         default: 0
+      },
+      loadData: {
+        type: Function
       }
     },
     data() {
@@ -64,7 +68,10 @@
       },
       onUpdateSelected(selected) {
         this.$emit('update:selected', selected)
-      }
+      },
+      rightArrowVisible(item){
+        return this.loadData ? !item.isLeaf : item.children
+      },
     }
   }
 
@@ -81,13 +88,20 @@
             padding: .3em 0;
 
             .label {
-                padding: .3em 1em;
+                padding: .5em 1em;
                 cursor: pointer;
                 white-space: nowrap;
                 display: flex;
                 align-items: center;
+                &:hover {
+                    background: $grey;
+                }
+                .name {
+                    margin-right: 1em;
+                    user-select: none;
+                }
                 .icon {
-                    margin-left: 1em;
+                    margin-left: auto;
                     transform: scale(.5);
                     opacity: 0.5;
                 }
