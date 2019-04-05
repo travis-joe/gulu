@@ -1,21 +1,19 @@
 <template>
     <div>
-        <p>11111</p>
         <g-cascader
-                :source.sync="source"
-                :selected.sync="selected"
-                popover-height="200px"
-                :load-data="loadData"
+            :source.sync="source"
+            :selected.sync="selected"
+            :load-data="loadData"
+            popover-height="200px"
         >
         </g-cascader>
-        <p>22222</p>
     </div>
 </template>
 <script>
   import Button from "./button";
   import Cascader from "./cascader";
   import db from './db'
-
+  import Popover from './popover'
 
   function ajax(parentId = 0) {
     return new Promise((success, fail) => {
@@ -29,7 +27,7 @@
       })
       setTimeout(() => {
         success(result)
-      }, 0)
+      }, 1000)
     })
   }
 
@@ -38,7 +36,8 @@
     name: "demo",
     components: {
       "g-button": Button,
-      "g-cascader": Cascader
+      "g-cascader": Cascader,
+      "g-popover": Popover
     },
     data() {
       return {
