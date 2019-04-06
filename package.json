@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "core-js": "2",
     "vue": "^2.5.17"
   },
   "devDependencies": {
