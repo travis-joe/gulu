@@ -3,8 +3,8 @@
  * File description:
  */
 const expect = chai.expect;
-import Vue from 'vue'
-import Toast from '../src/toast'
+import Vue from 'vue/types'
+import Toast from '../../src/toast'
 Vue.config.productionTip = false
 Vue.config.devtools = false
 
