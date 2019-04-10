@@ -1,67 +1,31 @@
 <template>
     <div>
-        <g-cascader
-            :source.sync="source"
-            :selected.sync="selected"
-            :load-data="loadData"
-            popover-height="200px"
-        >
-        </g-cascader>
+        <g-slides selected="3">
+            <g-slides-item name="1">
+                <div class="box">
+                    1
+                </div>
+            </g-slides-item>
+            <g-slides-item name="2">
+                <div class="box">
+                    2
+                </div>
+            </g-slides-item>
+            <g-slides-item name="3">
+                <div class="box">
+                    3
+                </div>
+            </g-slides-item>
+        </g-slides>
     </div>
 </template>
 <script>
-  import Button from "./button";
-  import Cascader from "./cascader";
-  import db from './db'
-  import Popover from './popover'
+  import GSlides from "./slides";
+  import GSlidesItem from "./slides-item";
 
-  function ajax(parentId = 0) {
-    return new Promise((success, fail) => {
-      const result = db.filter(item => item.parent_id === parentId)
-      result.forEach(node => {
-        if (db.filter(item => node.id === item.parent_id).length > 0) {
-          node.isLeaf = false
-        } else {
-          node.isLeaf = true
-        }
-      })
-      setTimeout(() => {
-        success(result)
-      }, 1000)
-    })
-  }
-
-  // console.log(ajax())
   export default {
     name: "demo",
-    components: {
-      "g-button": Button,
-      "g-cascader": Cascader,
-      "g-popover": Popover
-    },
-    data() {
-      return {
-        selected: [],
-        source: []
-      };
-    },
-    created() {
-      ajax(0).then(result => this.source = result)
-    },
-    methods: {
-      loadData(node, callback) {
-        let {name, id, parent_id} = node
-        ajax(id).then(result => {
-          callback(result)
-        })
-      },
-      onSelectedChange() {
-        ajax(this.selected[0].id).then(result => {
-          let lastSelected = this.source.filter(item => item.id === this.selected[0].id)[0]
-          this.$set(lastSelected, 'children', result)
-        })
-      }
-    }
+    components: {GSlides, GSlidesItem}
   };
 </script>
 <style>
@@ -81,5 +45,12 @@
 
     body {
         font-size: var(--font-size);
+    }
+
+    .box {
+        width: 200px;
+        height: 150px;
+        background: #ddd;
+        border: 1px solid red;
     }
 </style>
