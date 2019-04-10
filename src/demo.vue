@@ -1,6 +1,6 @@
 <template>
     <div>
-        <g-slides selected="3">
+        <g-slides :selected.sync="selected">
             <g-slides-item name="1">
                 <div class="box">
                     1
@@ -25,7 +25,12 @@
 
   export default {
     name: "demo",
-    components: {GSlides, GSlidesItem}
+    components: {GSlides, GSlidesItem},
+    data () {
+      return {
+        selected: undefined
+      }
+    }
   };
 </script>
 <style>
