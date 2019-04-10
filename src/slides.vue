@@ -30,12 +30,15 @@
     methods: {
       playAutomatically() {
         const names = this.$children.map(vm => vm.name)
-        let index = names.indexOf(this.getSelected())
         const run = () => {
-          console.log(index)
+          let index = names.indexOf(this.getSelected())
           let newIndex = index - 1
-          if (newIndex === -1) {newIndex = names.length - 1}
-          if (newIndex === names.length) { newIndex = 0 }
+          if (newIndex === -1) {
+            newIndex = names.length - 1
+          }
+          if (newIndex === names.length) {
+            newIndex = 0
+          }
           this.$emit('update:selected', names[newIndex])
           setTimeout(run, 3000)
         }
