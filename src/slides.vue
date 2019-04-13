@@ -1,5 +1,5 @@
 <template>
-  <div class="g-slides">
+  <div class="g-slides" @mouseenter="pause" @mouseleave="resume">
     <div class="g-slides-window">
       <div class="g-slides-wrapper">
         <slot></slot>
@@ -31,7 +31,8 @@ export default {
   data() {
     return {
       lastSelectedIndex: undefined,
-      childrenLength: 0
+      childrenLength: 0,
+      timerId: undefined
     };
   },
   computed: {
@@ -57,22 +58,35 @@ export default {
       this.$emit("update:selected", this.names[index]);
     },
     playAutomatically() {
+      if(this.timerId) return
       const run = () => {
         let index = this.names.indexOf(this.getSelected());
         let newIndex = index + 1;
         if (newIndex === -1) newIndex = this.names.length - 1;
         if (newIndex === this.names.length) newIndex = 0;
         this.select(newIndex);
-        setTimeout(run, 3000);
+        this.timerId = setTimeout(run, 3000);
       };
-      // setTimeout(run, 3000);
+      this.timerId = setTimeout(run, 3000);
+    },
+    pause() {
+      clearTimeout(this.timerId)
+      this.timerId = undefined
+    },
+    resume() {
+      console.log(this.timerId)
+      this.playAutomatically()
     },
     getSelected() {
       return this.selected || this.$children[0].name;
     },
     updateChildren() {
       this.$children.forEach(vm => {
-        vm.reverse = this.selectedIndex <= this.lastSelectedIndex;
+        let reverse = this.selectedIndex <= this.lastSelectedIndex;
+        if(this.lastSelectedIndex === this.childrenLength - 1 && this.selectedIndex === 0) {
+          reverse = false
+        }
+        vm.reverse = reverse
         this.$nextTick(() => {
           vm.selected = this.getSelected();
         });
