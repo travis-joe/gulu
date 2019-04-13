@@ -5,6 +5,14 @@
         <slot></slot>
       </div>
     </div>
+    <div class="g-slides-dots">
+      <span
+        v-for="n in childrenLength"
+        :class="{ active: selectedIndex === n - 1 }"
+        @click="select(n - 1)"
+        >{{ n - 1 }}</span
+      >
+    </div>
   </div>
 </template>
 
@@ -22,11 +30,13 @@ export default {
   },
   data() {
     return {
-      lastSelectedIndex: undefined
+      lastSelectedIndex: undefined,
+      childrenLength: 0
     };
   },
   computed: {
     selectedIndex() {
+      if (!this.selected) return 0;
       return this.names.indexOf(this.selected) || 0;
     },
     names() {
@@ -36,6 +46,7 @@ export default {
   mounted() {
     this.updateChildren();
     this.playAutomatically();
+    this.childrenLength = this.$children.length;
   },
   updated() {
     this.updateChildren();
@@ -54,7 +65,7 @@ export default {
         this.select(newIndex);
         setTimeout(run, 3000);
       };
-      setTimeout(run, 3000);
+      // setTimeout(run, 3000);
     },
     getSelected() {
       return this.selected || this.$children[0].name;
@@ -63,8 +74,8 @@ export default {
       this.$children.forEach(vm => {
         vm.reverse = this.selectedIndex <= this.lastSelectedIndex;
         this.$nextTick(() => {
-          vm.selected = this.getSelected()
-        })
+          vm.selected = this.getSelected();
+        });
       });
     }
   }
@@ -73,7 +84,7 @@ export default {
 
 <style scoped lang="scss">
 .g-slides {
-  display: inline-block;
+  border: 1px solid black;
 
   &-window {
     overflow: hidden;
@@ -81,6 +92,13 @@ export default {
 
   &-wrapper {
     position: relative;
+  }
+  &-dots {
+    cursor: pointer;
+    .active {
+      background: red;
+      color: #fff;
+    }
   }
 }
 </style>

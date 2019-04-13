@@ -1,6 +1,6 @@
 <template>
     <div>
-        <g-slides :selected.sync="selected">
+        <g-slides :selected.sync="selected" class="wrapper">
             <g-slides-item name="1">
                 <div class="box">
                     1
@@ -34,27 +34,13 @@
   };
 </script>
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    .wrapper {
+        margin: 40px;
     }
-
-    img {
-        max-width: 100%;
-    }
-
-    html {
-        --font-size: 14px;
-    }
-
-    body {
-        font-size: var(--font-size);
-    }
-
     .box {
-        width: 200px;
-        height: 150px;
+        width: 100%;
+        height: 350px;
         background: #ddd;
         border: 1px solid red;
     }
