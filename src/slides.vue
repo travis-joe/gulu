@@ -1,10 +1,10 @@
 <template>
-    <div class="g-slides"
-         @mouseenter="pause"
+    <div @mouseenter="pause"
          @mouseleave="resume"
+         @touchend="onTouchEnd"
          @touchmove="onTouchMove"
          @touchstart="onTouchStart"
-         @touchend="onTouchEnd"
+         class="g-slides"
     >
         <div class="g-slides-window">
             <div class="g-slides-wrapper">
@@ -12,19 +12,27 @@
             </div>
         </div>
         <div class="g-slides-dots">
-      <span
-              v-for="n in childrenLength"
-              :class="{ active: selectedIndex === n - 1 }"
-              @click="select(n - 1)"
-      >{{ n - 1 }}</span
-      >
+            <span @click="select(selectedIndex - 1)">
+                <g-icon name="left"></g-icon>
+            </span>
+            <span :class="{ active: selectedIndex === n - 1 }"
+                  @click="select(n - 1)"
+                  v-for="n in childrenLength">
+                {{ n - 1 }}
+            </span>
+            <span @click="select(selectedIndex + 1)">
+                <g-icon name="right"></g-icon>
+            </span>
         </div>
     </div>
 </template>
 
 <script>
+  import GIcon from './icon'
+
   export default {
     name: "g-slides",
+    components: {GIcon},
     props: {
       selected: {
         type: String
@@ -48,13 +56,16 @@
         return this.names.indexOf(this.selected) || 0;
       },
       names() {
-        return this.$children.map(vm => vm.name);
+        return this.items.map(vm => vm.name);
+      },
+      items() {
+        return this.$children.filter(vm => vm.$options.name === 'SlidesItem')
       }
     },
     mounted() {
       this.updateChildren();
       this.playAutomatically();
-      this.childrenLength = this.$children.length;
+      this.childrenLength = this.items.length;
     },
     updated() {
       this.updateChildren();
@@ -82,7 +93,7 @@
             this.select(this.selectedIndex + 1)
           }
         }
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.playAutomatically();
         })
         console.log(2);
@@ -134,7 +145,7 @@
   };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
     .g-slides {
         &-window {
             overflow: hidden;
