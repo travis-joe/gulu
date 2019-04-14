@@ -36,12 +36,11 @@
 <style>
     * {margin: 0; padding: 0; box-sizing: border-box;}
     .wrapper {
-        margin: 40px;
+        margin: 100px;
     }
     .box {
         width: 100%;
         height: 350px;
         background: #ddd;
-        border: 1px solid red;
     }
 </style>
