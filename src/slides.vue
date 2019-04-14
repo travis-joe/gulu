@@ -1,5 +1,11 @@
 <template>
-    <div class="g-slides" @mouseenter="pause" @mouseleave="resume">
+    <div class="g-slides"
+         @mouseenter="pause"
+         @mouseleave="resume"
+         @touchmove="onTouchMove"
+         @touchstart="onTouchStart"
+         @touchend="onTouchEnd"
+    >
         <div class="g-slides-window">
             <div class="g-slides-wrapper">
                 <slot></slot>
@@ -25,14 +31,15 @@
       },
       autoPlay: {
         type: Boolean,
-        default: false
+        default: true
       }
     },
     data() {
       return {
         lastSelectedIndex: undefined,
         childrenLength: 0,
-        timerId: undefined
+        timerId: undefined,
+        startTouch: undefined
       };
     },
     computed: {
@@ -45,25 +52,53 @@
       }
     },
     mounted() {
-      // this.updateChildren();
-      // this.autoPlay && this.playAutomatically();
+      this.updateChildren();
+      this.playAutomatically();
       this.childrenLength = this.$children.length;
     },
     updated() {
       this.updateChildren();
     },
     methods: {
+      onTouchStart(e) {
+        if (e.touches.length > 1) return;
+        this.touchstart = e.touches[0];
+      },
+      onTouchMove(e) {
+        this.pause();
+        console.log(1);
+      },
+      onTouchEnd(e) {
+        const endTouch = e.changedTouches[0];
+        const {clientX: x1, clientY: y1} = this.touchstart
+        const {clientX: x2, clientY: y2} = endTouch
+        const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        const deltaY = Math.abs(y2 - y1);
+        const rate = distance / deltaY;
+        if (rate > 2) {
+          if (x2 > x1) {
+            this.select(this.selectedIndex - 1)
+          } else {
+            this.select(this.selectedIndex + 1)
+          }
+        }
+        this.$nextTick(()=>{
+          this.playAutomatically();
+        })
+        console.log(2);
+      },
       select(index) {
+        if (index === -1) index = this.names.length - 1;
+        if (index === this.names.length) index = 0;
         this.lastSelectedIndex = this.selectedIndex;
         this.$emit("update:selected", this.names[index]);
       },
       playAutomatically() {
+        if (!this.autoPlay) return;
         if (this.timerId) return;
         const run = () => {
           let index = this.names.indexOf(this.getSelected());
-          let newIndex = index - 1;
-          if (newIndex === -1) newIndex = this.names.length - 1;
-          if (newIndex === this.names.length) newIndex = 0;
+          let newIndex = index + 1;
           this.select(newIndex);
           this.timerId = setTimeout(run, 3000);
         };
@@ -74,7 +109,7 @@
         this.timerId = undefined;
       },
       resume() {
-        this.autoPlay && this.playAutomatically();
+        this.playAutomatically();
       },
       getSelected() {
         return this.selected || this.$children[0].name;
@@ -125,6 +160,7 @@
                 margin: 0 8px;
                 background: #ddd;
                 font-size: 12px;
+
                 &:hover {
                     cursor: pointer;
                 }
@@ -132,6 +168,7 @@
                 &.active {
                     background: black;
                     color: #fff;
+
                     &:hover {
                         cursor: default;
                     }
