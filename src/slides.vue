@@ -17,6 +17,8 @@
             </span>
             <span :class="{ active: selectedIndex === n - 1 }"
                   @click="select(n - 1)"
+                  :key="n"
+                  :data-index="n-1"
                   v-for="n in childrenLength">
                 {{ n - 1 }}
             </span>
@@ -40,6 +42,10 @@
       autoPlay: {
         type: Boolean,
         default: true
+      },
+      delay:{
+        type: Number,
+        default: 3000
       }
     },
     data() {
@@ -111,9 +117,9 @@
           let index = this.names.indexOf(this.getSelected());
           let newIndex = index + 1;
           this.select(newIndex);
-          this.timerId = setTimeout(run, 3000);
+          this.timerId = setTimeout(run, this.delay);
         };
-        this.timerId = setTimeout(run, 3000);
+        this.timerId = setTimeout(run, this.delay);
       },
       pause() {
         clearTimeout(this.timerId);
