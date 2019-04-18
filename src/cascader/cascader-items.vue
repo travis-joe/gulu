@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Icon from "./icon";
+import Icon from "../icon";
 
 export default {
   name: "CascaderItems",
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "var";
+@import "../var";
 
 .cascaderItems {
   display: flex;

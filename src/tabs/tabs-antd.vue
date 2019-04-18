@@ -1,5 +1,5 @@
 <script>
-  import Vue from 'vue'
+  import Vue from 'vue/types'
   import TabHead from './tabs-head'
   import TabBody from './tabs-body'
   import TabItem from './tabs-item'
