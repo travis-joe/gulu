@@ -1,34 +1,28 @@
 <template>
     <div>
-        <g-slides :selected.sync="selected" class="wrapper">
-            <g-slides-item name="1">
-                <div class="box">
-                    1
-                </div>
-            </g-slides-item>
-            <g-slides-item name="2">
-                <div class="box">
-                    2
-                </div>
-            </g-slides-item>
-            <g-slides-item name="3">
-                <div class="box">
-                    3
-                </div>
-            </g-slides-item>
-        </g-slides>
+        <g-nav :selected="selected" :multiple="false">
+            <g-nav-item name="home">首页</g-nav-item>
+            <g-sub-nav name="about">
+                <template slot="title">关于</template>
+                <g-nav-item name="culture">企业文化</g-nav-item>
+                <g-nav-item name="develops">开发团队</g-nav-item>
+                <g-nav-item name="contacts">联系电话</g-nav-item>
+            </g-sub-nav>
+            <g-nav-item name="hire">招聘</g-nav-item>
+        </g-nav>
     </div>
 </template>
 <script>
-  import GSlides from "./slides/slides";
-  import GSlidesItem from "./slides/slides-item";
+  import GNav from "./nav/nav";
+  import GNavItem from "./nav/nav-item";
+  import GSubNav from "./nav/sub-nav";
 
   export default {
     name: "demo",
-    components: {GSlides, GSlidesItem},
+    components: {GNav, GNavItem, GSubNav},
     data () {
       return {
-        selected: undefined
+        selected: ['home']
       }
     }
   };
