@@ -18,6 +18,7 @@
         required: true
       }
     },
+    inject:['root'],
     data() {
       return {
         open: false,
@@ -30,6 +31,12 @@
       },
       setSelected() {
         this.active = true
+        this.root.namePath.unshift(this.name)
+        if(this.$parent.setSelected) {
+          this.$parent.setSelected()
+        }else {
+          this.root.namePath = []
+        }
       }
     }
   }

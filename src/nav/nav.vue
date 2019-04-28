@@ -9,7 +9,8 @@
     name: "GuluNav",
     data() {
       return {
-        items: []
+        items: [],
+        namePath: []
       }
     },
     provide(){
