@@ -25,6 +25,7 @@
     methods: {
       onClick() {
         this.$emit('update:selected', this.name)
+        this.$parent.setSelected && this.$parent.setSelected()
       }
     }
   }
