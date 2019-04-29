@@ -7,6 +7,7 @@
 <script>
   export default {
     name: "GuluNavItem",
+    inject: ['root'],
     props: {
       name: {
         type: String,
@@ -18,14 +19,14 @@
         selected: false
       }
     },
-    inject: ['root'],
     created() {
       this.root.addItem(this);
     },
     methods: {
       onClick() {
+        this.root.namePath = []
+        this.$parent.updateNamePath && this.$parent.updateNamePath()
         this.$emit('update:selected', this.name)
-        this.$parent.setSelected && this.$parent.setSelected()
       }
     }
   }

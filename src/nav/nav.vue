@@ -1,6 +1,7 @@
 <template>
   <div class="g-nav">
     <slot></slot>
+    {{this.namePath}}
   </div>
 </template>
 
