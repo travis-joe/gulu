@@ -1,7 +1,6 @@
 <template>
-  <div class="g-nav">
+  <div class="g-nav" :class="{vertical}" >
     <slot></slot>
-    {{this.namePath}}
   </div>
 </template>
 
@@ -16,13 +15,17 @@
     },
     provide(){
       return {
-        root: this
+        root: this,
       }
     },
     props: {
       selected: {
         type: String,
         default: '',
+      },
+      vertical: {
+        type: Boolean,
+        default: false,
       }
     },
     mounted () {
@@ -59,5 +62,10 @@
     border: 1px solid $grey;
     color: $color;
     cursor: default;
+    user-select: none;
+    &.vertical {
+      flex-direction: column;
+      border: 1px solid $grey;
+    }
   }
 </style>

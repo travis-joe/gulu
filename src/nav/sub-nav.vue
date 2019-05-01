@@ -1,23 +1,34 @@
 <template>
   <div class="g-sub-nav" :class="{active}" v-click-outside="close">
-    <span @click="onClick">
+    <span class="g-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-      <span v-if="open">-</span>
-      <span v-else>+</span>
+      <span class="g-sub-nav-icon" :class="{open}">
+        <g-icon name="right"></g-icon>
+      </span>
     </span>
-    <div class="g-sub-nav-popover" v-show="open">
-      <slot></slot>
-    </div>
+    <template v-if="vertical">
+      <transition @enter="enter" @leave="leave" @after-leave="afterLeave" @after-enter="afterEnter">
+        <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
+          <slot></slot>
+        </div>
+      </transition>
+    </template>
+    <template v-else>
+      <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
+        <slot></slot>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
   import ClickOutside from '../click-outside'
-
+  import GIcon from '../icon'
   export default {
     name: "GuluSubNav",
     inject:['root'],
     directives: {ClickOutside},
+    components: {GIcon},
     props: {
       name: {
         type: String,
@@ -27,6 +38,9 @@
     computed: {
       active() {
         return this.root.namePath.includes(this.name)
+      },
+      vertical() {
+        return this.root.vertical
       }
     },
     data() {
@@ -35,8 +49,29 @@
       }
     },
     methods: {
+      enter(el, done) {
+        let {height} = el.getBoundingClientRect()
+        el.style.height = 0
+        el.getBoundingClientRect()
+        el.style.height = `${height}px`
+        el.addEventListener('transitionend', ()=> {
+          done()
+        })
+      },
+      afterEnter(el){
+        el.style.height = 'auto'
+      },
+      leave(el) {
+        let {height} = el.getBoundingClientRect()
+        el.style.height = `${height}px`
+        el.getBoundingClientRect()
+        el.style.height = 0
+      },
+      afterLeave(el){
+        el.style.height = 'auto'
+      },
       onClick() {
-        this.open = true
+        this.open = !this.open
       },
       close() {
         this.open = false
@@ -63,10 +98,12 @@
         width: 100%;
       }
     }
-    > span {
+    &-icon{
+      display: none;
+    }
+    &-label {
       padding: 14px 20px;
       display: block;
-      vertical-align: top;
     }
     &-popover{
       position: absolute;
@@ -80,11 +117,41 @@
       color: $light-color;
       font-size: $small-font-size;
       min-width: 8em;
+      transition: height .25s;
+      &.vertical{
+        position: static;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        overflow-y: hidden;
+      }
     }
   }
-  .g-sub-nav .g-sub-nav .g-sub-nav-popover {
-    top:0;
-    left: 100%;
-    margin-left: 8px;
+  .g-sub-nav .g-sub-nav {
+    &.active {
+      &::after {
+        display: none;
+      }
+    }
+    .g-sub-nav-popover {
+      top:0;
+      left: 100%;
+      margin-left: 8px;
+    }
+    .g-sub-nav-label{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex: 1;
+    }
+    .g-sub-nav-icon{
+      display: inline-flex;
+      margin-left: 1em;
+      transition: all .3s;
+      svg{fill: $light-color}
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
   }
 </style>
