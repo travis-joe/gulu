@@ -1,8 +1,8 @@
 <template>
-  <div class="g-sub-nav" :class="{active}" v-click-outside="close">
+  <div class="g-sub-nav" :class="{active, vertical}" v-click-outside="close">
     <span class="g-sub-nav-label" @click="onClick">
       <slot name="title"></slot>
-      <span class="g-sub-nav-icon" :class="{open}">
+      <span class="g-sub-nav-icon" :class="{open, vertical}">
         <g-icon name="right"></g-icon>
       </span>
     </span>
@@ -88,16 +88,19 @@
   @import "../../styles/var";
   .g-sub-nav{
     position: relative;
-    &.active {
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left:0;
-        border-bottom: 2px solid $blue;
-        width: 100%;
+    &:not(.vertical) {
+      &.active {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left:0;
+          border-bottom: 2px solid $blue;
+          width: 100%;
+        }
       }
     }
+
     &-icon{
       display: none;
     }
@@ -149,6 +152,12 @@
       margin-left: 1em;
       transition: all .3s;
       svg{fill: $light-color}
+      &.vertical {
+        transform: rotate(90deg);
+        &.open {
+          transform: rotate(270deg);
+        }
+      }
       &.open {
         transform: rotate(180deg);
       }

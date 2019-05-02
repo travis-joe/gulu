@@ -1,5 +1,5 @@
 <template>
-  <div class="g-nav-item" :class="{selected}" @click="onClick">
+  <div class="g-nav-item" :class="{selected, vertical}" @click="onClick">
     <slot></slot>
   </div>
 </template>
@@ -12,6 +12,11 @@
       name: {
         type: String,
         require: true
+      }
+    },
+    computed: {
+      vertical() {
+        return this.root.vertical
       }
     },
     data() {
@@ -37,18 +42,29 @@
   .g-nav-item{
     padding: 14px 20px;
     position: relative;
-    &.selected {
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left:0;
-        border-bottom: 2px solid $blue;
-        width: 100%;
+    &:not(.vertical) {
+      &.selected {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left:0;
+          border-bottom: 2px solid $blue;
+          width: 100%;
+        }
+      }
+    }
+    &.vertical {
+      &.selected{
+        color: $blue;
       }
     }
   }
-  .g-sub-nav .g-nav-item {
+  a{
+    color: inherit;
+    text-decoration: none;
+  }
+  .g-sub-nav .g-nav-item:not(.vertical) {
     &.selected {
       background: $grey;
       color: black;
