@@ -21,7 +21,6 @@
     props: {
       selected: {
         type: String,
-        default: '',
       },
       vertical: {
         type: Boolean,

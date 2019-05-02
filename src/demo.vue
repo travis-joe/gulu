@@ -34,7 +34,12 @@
       return {
         selected: 'home'
       }
-    }
+    },
+      watch: {
+        selected(val) {
+            console.log(val);
+        }
+      }
   };
 </script>
 <style>
