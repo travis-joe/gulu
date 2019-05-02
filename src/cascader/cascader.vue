@@ -5,13 +5,13 @@
         </div>
         <div class="popover-wrapper" v-if="popoverVisible" ref="popoverWrapper">
             <cascader-items
-                    :items="source"
-                    class="popover"
-                    :height="popoverHeight"
-                    :selected="selected"
-                    @update:selected="onUpdateSelected"
-                    :loadData="loadData"
-                    :loading-item="loadingItem"
+                :items="source"
+                class="popover"
+                :height="popoverHeight"
+                :selected="selected"
+                @update:selected="onUpdateSelected"
+                :loadData="loadData"
+                :loading-item="loadingItem"
             ></cascader-items>
         </div>
     </div>
