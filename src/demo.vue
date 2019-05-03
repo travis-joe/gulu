@@ -1,55 +1,16 @@
 <template>
     <div>
-        <g-nav :selected.sync="selected" vertical>
-            <g-nav-item name="home">首页</g-nav-item>
-            <g-sub-nav name="about">
-                <template slot="title">关于</template>
-                <g-nav-item name="culture">企业文化</g-nav-item>
-                <g-nav-item name="develops">开发团队</g-nav-item>
-                <g-sub-nav name="contacts">
-                    <template slot="title">联系电话</template>
-                    <g-nav-item name="wechat">微信</g-nav-item>
-                    <g-nav-item name="qq">qq</g-nav-item>
-                    <g-sub-nav name="phone">
-                        <template slot="title">手机</template>
-                        <g-nav-item name="cn">电信</g-nav-item>
-                        <g-nav-item name="cu">联通</g-nav-item>
-                        <g-nav-item name="cm">移动</g-nav-item>
-                    </g-sub-nav>
-                </g-sub-nav>
-            </g-sub-nav>
-            <g-nav-item name="hire">招聘</g-nav-item>
-        </g-nav>
+        <g-pager :total=20 :current=3></g-pager>
     </div>
 </template>
 <script>
-  import GNav from "./nav/nav";
-  import GNavItem from "./nav/nav-item";
-  import GSubNav from "./nav/sub-nav";
+  import GPager from "./pager";
 
   export default {
     name: "demo",
-    components: {GNav, GNavItem, GSubNav},
-    data () {
-      return {
-        selected: 'home'
-      }
-    },
-      watch: {
-        selected(val) {
-            console.log(val);
-        }
-      }
+    components: {GPager},
   };
 </script>
 <style>
     * {margin: 0; padding: 0; box-sizing: border-box;}
-    .wrapper {
-        margin: 100px;
-    }
-    .box {
-        width: 100%;
-        height: 350px;
-        background: #ddd;
-    }
 </style>
