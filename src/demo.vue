@@ -1,6 +1,6 @@
 <template>
     <div>
-        <g-pager :total=20 :current=3></g-pager>
+        <g-pager :total=20 :current.sync='current'></g-pager>
     </div>
 </template>
 <script>
@@ -9,6 +9,11 @@
   export default {
     name: "demo",
     components: {GPager},
+    data(){
+        return {
+            current: 1
+        }
+    }
   };
 </script>
 <style>
