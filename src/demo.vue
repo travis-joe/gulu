@@ -7,6 +7,7 @@
       :selected-items.sync="selected"
       bordered
       compact
+      :order-by.sync="orderBy"
       :striped="false"
     ></g-table>
     <g-pager
@@ -26,9 +27,13 @@ export default {
   data() {
     return {
       columns: [
-        { text: "姓名", field: "name" },
-        { text: "分数", field: "score" }
+        { text: "姓名", field: "name", },
+        { text: "分数", field: "score", }
       ],
+      orderBy:{
+        name: 'asc',
+        score: 'desc'
+      },
       selected: [],
       dataSource: [
         { id: 1, name: "芳芳", score: 100 },
