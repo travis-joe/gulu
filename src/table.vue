@@ -1,35 +1,38 @@
 <template>
-  <div class="gulu-table-wrapper">
-    <table :class="{bordered, compact, striped }" class="gulu-table">
-      <thead>
-      <tr>
-        <th><input @change="onChangeAll" ref="allChecked" type="checkbox"></th>
-        <th v-if="numberVisible">#</th>
-        <th :key="column.field" v-for="column in columns">
-          {{ column.text }}
-          <span class="gulu-table-sorter" v-if="column.field in orderBy" @click="changeOrderBy(column.field)">
+  <div class="gulu-table-wrapper"  ref="wrapper">
+    <div :style="{height, overflow: 'auto'}" ref="table-wrapper">
+      <table :class="{bordered, compact, striped }" class="gulu-table" ref="table">
+        <thead>
+        <tr>
+          <th :style="{width: '50px'}"><input @change="onChangeAll" ref="allChecked" type="checkbox"></th>
+          <th v-if="numberVisible" :style="{width: '50px'}">#</th>
+          <th :key="column.field" v-for="column in columns" :style="{width: column.width+'px'}">
+            {{ column.text }}
+            <span class="gulu-table-sorter" v-if="column.field in orderBy" @click="changeOrderBy(column.field)">
             <g-icon name="asc" :class="{active: orderBy[column.field] === 'asc'}"></g-icon>
             <g-icon name="desc" :class="{active: orderBy[column.field] === 'desc'}"></g-icon>
           </span>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr :key="item.id" v-for="(item, index) in dataSource">
-        <td>
-          <input
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr :key="item.id" v-for="(item, index) in dataSource">
+          <td :style="{width: '50px'}">
+            <input
               :checked="selectedItems.filter(i => i.id===item.id).length > 0"
               @change="onChangeItem(item, index, $event)"
               type="checkbox"
-          >
-        </td>
-        <td v-if="numberVisible">{{ index + 1 }}</td>
-        <template v-for="column in columns">
-          <td :key="column.field">{{ item[column.field] }}</td>
-        </template>
-      </tr>
-      </tbody>
-    </table>
+            >
+          </td>
+          <td v-if="numberVisible" :style="{width: '50px'}">{{ index + 1 }}</td>
+          <template v-for="column in columns">
+            <td :key="column.field" :style="{width: column.width+'px'}">{{ item[column.field] }}</td>
+          </template>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="gulu-table-loading" v-if="loading">
       <g-icon name="loading"></g-icon>
     </div>
@@ -41,7 +44,22 @@
   export default {
     name: "GuluTable",
     components:{GIcon},
+    mounted() {
+      let originTable = this.$refs.table
+      let tHead = originTable.children[0]
+      let cloneTable = originTable.cloneNode(false)
+      let {height} = tHead.getBoundingClientRect()
+      this.$refs['table-wrapper'].style.marginTop = height + 'px'
+      console.log(parseInt(this.height) - height)
+      this.$refs['table-wrapper'].style.height = parseInt(this.height) - height + 'px'
+      cloneTable.classList.add('gulu-table-cloned')
+      cloneTable.appendChild(tHead)
+      this.$refs.wrapper.append(cloneTable)
+    },
     props: {
+      height: {
+        type: Number,
+      },
       loading: {
         type: Boolean,
         default: false,
@@ -122,10 +140,10 @@
         let checked = e.target.checked;
         if (checked) {
           this.selectedItems.push(item)
+          this.$emit('update:selectedItems', this.selectedItems)
         } else {
-          this.selectedItems = this.selectedItems.filter(i => i.id !== item.id)
+          this.$emit('update:selectedItems', this.selectedItems.filter(i => i.id !== item.id))
         }
-        this.$emit('update:selectedItems', this.selectedItems)
       },
       onChangeAll(e) {
         let checked = e.target.checked;
@@ -145,9 +163,16 @@
     border-collapse: collapse;
     border-spacing: 0;
     border-bottom: 1px solid $grey;
+    background: #fff;
+    &-cloned {
+      position: absolute;
+      top:0;
+      left:0;
+      width: 100%;
+    }
     &-wrapper {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
     }
     &-loading {
       background: rgba(255, 255, 255, 0.8);
