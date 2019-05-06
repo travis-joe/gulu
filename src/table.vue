@@ -30,6 +30,9 @@
       </tr>
       </tbody>
     </table>
+    <div class="gulu-table-loading" v-if="loading">
+      <g-icon name="loading"></g-icon>
+    </div>
   </div>
 </template>
 
@@ -39,6 +42,10 @@
     name: "GuluTable",
     components:{GIcon},
     props: {
+      loading: {
+        type: Boolean,
+        default: false,
+      },
       columns: {
         type: Array,
         required: true
@@ -138,7 +145,26 @@
     border-collapse: collapse;
     border-spacing: 0;
     border-bottom: 1px solid $grey;
-
+    &-wrapper {
+      position: relative;
+      overflow: auto;
+    }
+    &-loading {
+      background: rgba(255, 255, 255, 0.8);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        width: 40px;
+        height: 40px;
+        @include spin;
+      }
+    }
     &.bordered {
       border: 1px solid $grey;
 
