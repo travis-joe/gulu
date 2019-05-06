@@ -11,7 +11,12 @@
       :height=400
       checkable
       expand-field="description"
-    ></g-table>
+    >
+      <template slot-scope="xxx">
+        <button>编辑</button>
+        <button>查看</button>
+      </template>
+    </g-table>
     <g-pager
       :current.sync="current"
       :total="total"
@@ -30,7 +35,7 @@ export default {
     return {
       columns: [
         { text: "姓名", field: "name", width: 100,},
-        { text: "分数", field: "score",}
+        { text: "分数", field: "score"}
       ],
       orderBy:{
         name: 'asc',

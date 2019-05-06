@@ -34,6 +34,7 @@
                 ></g-icon>
               </span>
             </th>
+            <th ref="actionsHeader" v-if="$scopedSlots.default"></th>
           </tr>
         </thead>
         <tbody>
@@ -65,6 +66,11 @@
                   {{ item[column.field] }}
                 </td>
               </template>
+              <td v-if="$scopedSlots.default">
+                <div ref="actions" style="display: inline-flex;">
+                  <slot :item="item"></slot>
+                </div>
+              </td>
             </tr>
             <tr v-if="inExpandedIds(item.id)">
               <td :colspan="colspan">
@@ -98,6 +104,23 @@ export default {
     cloneTable.classList.add("gulu-table-cloned");
     cloneTable.appendChild(tHead);
     this.$refs.wrapper.append(cloneTable);
+
+    if(this.$scopedSlots.default){
+
+      let div = this.$refs.actions[0]
+      let {width} = div.getBoundingClientRect()
+      let parent = div.parentNode
+      let styles = getComputedStyle(parent)
+      let paddingLeft = styles.getPropertyValue('padding-left')
+      let paddingRight = styles.getPropertyValue('padding-right')
+      let borderLeft = styles.getPropertyValue('border-left-width')
+      let borderRight = styles.getPropertyValue('border-right-width')
+      let width2 = width + parseInt(paddingLeft) + parseInt(paddingRight) + parseInt(borderLeft) + parseInt(borderRight) + 'px'
+      this.$refs.actionsHeader.style.width = width2
+      this.$refs.actions.map(div => {
+        div.parentNode.style.width = width2
+      })
+    }
   },
   computed: {
     colspan(){
