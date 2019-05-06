@@ -1,5 +1,5 @@
 <template>
-    <svg class="g-icon" @click="$emit('click', $event)">
+    <svg class="g-icon" @click="$emit('click', $event)" :style="{fill: color}">
         <use :xlink:href="`#i-${name}`"></use>
     </svg>
 </template>
@@ -8,7 +8,7 @@
   import "./svg";
   export default {
     name: "GuluIcon",
-    props: ["name"]
+    props: ["name","color"]
   };
 </script>
 

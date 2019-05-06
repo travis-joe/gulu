@@ -9,6 +9,8 @@
       compact
       :order-by.sync="orderBy"
       :height=400
+      checkable
+      expand-field="description"
     ></g-table>
     <g-pager
       :current.sync="current"
@@ -36,8 +38,8 @@ export default {
       },
       selected: [],
       dataSource: [
-        { id: 1, name: "芳芳", score: 100 },
-        { id: 2, name: "圆圆", score: 99 },
+        { id: 1, name: "芳芳", score: 100, description: "xxxx xxxxx"},
+        { id: 2, name: "圆圆", score: 99, description: "xxxx xxxxx"},
         { id: 3, name: "三三", score: 99 },
         { id: 4, name: "思思", score: 99 },
         { id: 5, name: "佩佩", score: 99 },
