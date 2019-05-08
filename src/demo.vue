@@ -1,36 +1,25 @@
 <template>
   <div>
-    <g-table
-      :columns="columns"
-      :data-source="dataSource"
-      style="margin-top: 20px"
-      :selected-items.sync="selected"
-      bordered
-      compact
-      :order-by.sync="orderBy"
-      :height=400
-      checkable
-      expand-field="description"
+    <g-uploader
+      accept="/*"
+      action="https://node-image-upload-service-1231.herokuapp.com/upload"
+      name="file"
+      method="POST"
     >
-      <template slot-scope="xxx">
-        <button>编辑</button>
-        <button>查看</button>
+      <button>上传</button>
+      <template slot="tips">
+        <div>只能传300kb以内的png、jpeg</div>
       </template>
-    </g-table>
-    <g-pager
-      :current.sync="current"
-      :total="total"
-      style="margin-top: 20px"
-    ></g-pager>
+    </g-uploader>
+    <button>保存</button>
   </div>
 </template>
 <script>
-import GTable from "./table";
-import GPager from "./pager";
+import GUploader from "./uploader";
 
 export default {
   name: "demo",
-  components: { GTable, GPager },
+  components: { GUploader },
   data() {
     return {
       columns: [
