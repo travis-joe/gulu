@@ -8,6 +8,7 @@
       <li v-for="file in fileList" :key="file.name">
         <img :src="file.url" alt="">
         {{file.name}}
+        {{file.status}}
         <button @click="onRemoveFile(file)">x</button>
       </li>
     </ol>
@@ -57,13 +58,24 @@
         this.$refs.inputWrapper.appendChild(input)
         return input
       },
-      uploadFile(file) {
+      beforeUploadFile(rawFile){
+        rawFile.status = 'uploading'
+        this.$emit('update:fileList', [...this.fileList, rawFile])
+      },
+      afterUploadFile(file){
+        file.status = 'uploaded'
+        console.log(file)
+        console.log(this.fileList)
+        const newFileList = this.fileList.filter(old => old.name === file.name)
+        this.$emit('update:fileList', newFileList)
+      },
+      uploadFile(rawFile) {
+        this.beforeUploadFile(rawFile)
         const formData = new FormData()
-        formData.append(this.name, file)
+        formData.append(this.name, rawFile)
         this.request(formData, (response) => {
-          file.url = this.parseImg(response)
-          console.log(file)
-          this.$emit('update:fileList', [...this.fileList, file])
+          rawFile.url = this.parseImg(response)
+          this.afterUploadFile(rawFile)
         })
       },
       request(formData, success){
@@ -88,6 +100,8 @@
 
 <style scoped lang="scss">
   .gulu-uploader{
-
+    ol{
+      list-style: none;
+    }
   }
 </style>
