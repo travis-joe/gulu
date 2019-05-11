@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div>只能传300kb以内的png、jpeg</div>
+
     <g-uploader
       accept="/*"
       action="https://node-image-upload-service-1231.herokuapp.com/upload"
@@ -8,20 +10,19 @@
       :parseImg="parseImg"
       :file-list.sync="fileList"
     >
-      <button>上传</button>
-      <template slot="tips">
-        <div>只能传300kb以内的png、jpeg</div>
-      </template>
+      <g-button icon="upload">上传</g-button>
     </g-uploader>
-    <button>保存</button>
+
+    <g-button>保存</g-button>
   </div>
 </template>
 <script>
 import GUploader from "./uploader";
+import GButton from "./button/button";
 
 export default {
   name: "demo",
-  components: { GUploader },
+  components: { GUploader, GButton },
   data() {
     return {
       fileList: []

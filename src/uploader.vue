@@ -6,18 +6,27 @@
     <div ref="inputWrapper" style="display: none"></div>
     <ol>
       <li v-for="file in fileList" :key="file.name">
-        <img :src="file.url" alt="">
-        {{file.name}}
-        {{file.status}}
-        <button @click="onRemoveFile(file)">x</button>
+        <div class="image-wrapper">
+          <template v-if="file.status === 'uploading'">
+            <icon name="loading" class="spin"></icon>
+          </template>
+          <template v-else-if="file.type.startsWith('image')">
+            <img :src="file.url" alt="" width="30" height="30">
+          </template>
+        </div>
+
+        <span class="gulu-uploader-name" :class="{[file.status]: file.status}">{{file.name}}</span>
+        <button class="remove" @click="onRemoveFile(file)">x</button>
       </li>
     </ol>
   </div>
 </template>
 
 <script>
+  import icon from './icon'
   export default {
     name: "GuluUploader",
+    components:{icon},
     props: {
       name: {
         type: String,
@@ -62,27 +71,38 @@
         rawFile.status = 'uploading'
         this.$emit('update:fileList', [...this.fileList, rawFile])
       },
-      afterUploadFile(file){
-        file.status = 'uploaded'
-        console.log(file)
-        console.log(this.fileList)
-        const newFileList = this.fileList.filter(old => old.name === file.name)
-        this.$emit('update:fileList', newFileList)
-      },
       uploadFile(rawFile) {
         this.beforeUploadFile(rawFile)
         const formData = new FormData()
         formData.append(this.name, rawFile)
-        this.request(formData, (response) => {
+        this.doUploadFile(formData, (response) => {
           rawFile.url = this.parseImg(response)
           this.afterUploadFile(rawFile)
+        }, () => {
+          this.uploadError(rawFile)
         })
       },
-      request(formData, success){
+      updateFileList(file) {
+        const index = this.fileList.findIndex(f => f.name === file.name)
+        const newFileList = [...this.fileList.splice(0, index), file, ...this.fileList.splice(index + 1)]
+        this.$emit('update:fileList', newFileList)
+      },
+      afterUploadFile(file){
+        file.status = 'uploaded'
+        this.updateFileList(file);
+      },
+      uploadError(file){
+        file.status = 'failed'
+        this.updateFileList(file);
+      },
+      doUploadFile(formData, success, fail){
         const xhr = new XMLHttpRequest()
         xhr.open(this.method, this.action)
         xhr.onload = () => {
           success(xhr.response)
+        }
+        xhr.onerror = () => {
+          fail()
         }
         xhr.send(formData)
       },
@@ -99,9 +119,42 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../styles/var";
+
   .gulu-uploader{
     ol{
       list-style: none;
+      > li{
+        display: flex;
+        align-items: center;
+        margin: 8px 0;
+        border: 1px solid $grey;
+        .spin{
+          width:32px;
+          height: 32px;
+          font-size: 12px;
+          @include spin;
+        }
+      }
+      .image-wrapper{
+        margin-right: 8px;
+      }
+    }
+    .remove{
+      width: 32px;
+      height: 32px;
+    }
+    &-name{
+      margin-right: auto;
+      &.uploaded{
+        color: green;
+      }
+      &.failed{
+        color: red;
+      }
+      &.uploading{
+        color: blue;
+      }
     }
   }
 </style>
