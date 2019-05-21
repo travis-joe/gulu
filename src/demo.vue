@@ -9,6 +9,7 @@
       method="POST"
       :parseImg="parseImg"
       :file-list.sync="fileList"
+      @error="alert"
     >
       <g-button icon="upload">上传</g-button>
     </g-uploader>
@@ -29,6 +30,9 @@ export default {
     }
   },
   methods: {
+    alert(error){
+      alert(error || '上传失败')
+    },
     parseImg(res) {
      return `https://node-image-upload-service-1231.herokuapp.com/preview/${res}`
     }

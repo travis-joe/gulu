@@ -47,6 +47,9 @@
       fileList:{
         type: Array,
         default: () => []
+      },
+      sizeLimit: {
+        type: Number,
       }
     },
     data() {
@@ -62,24 +65,33 @@
         }
       },
       createInput(){
+        this.$refs.inputWrapper.innerHTML = ''
         const input = document.createElement('input')
         input.type = 'file'
+        input.multiple = true
         this.$refs.inputWrapper.appendChild(input)
         return input
       },
       beforeUploadFile(rawFile){
-        rawFile.status = 'uploading'
-        this.$emit('update:fileList', [...this.fileList, rawFile])
+        let {size, type} = rawFile
+        if( size > this.sizeLimit) {
+          this.$emit('error', `文件大于${this.sizeLimit}kb`)
+          return false
+        } else {
+          rawFile.status = 'uploading'
+          this.$emit('update:fileList', [...this.fileList, rawFile])
+          return true
+        }
       },
       uploadFile(rawFile) {
-        this.beforeUploadFile(rawFile)
+        if(!this.beforeUploadFile(rawFile)) return
         const formData = new FormData()
         formData.append(this.name, rawFile)
         this.doUploadFile(formData, (response) => {
           rawFile.url = this.parseImg(response)
           this.afterUploadFile(rawFile)
-        }, () => {
-          this.uploadError(rawFile)
+        }, (xhr) => {
+          this.uploadError(rawFile, xhr)
         })
       },
       updateFileList(file) {
@@ -91,9 +103,14 @@
         file.status = 'uploaded'
         this.updateFileList(file);
       },
-      uploadError(file){
+      uploadError(file, xhr){
         file.status = 'failed'
         this.updateFileList(file);
+        let error = null;
+        if(xhr.status === 0) {
+          error = '网络无法链接'
+        }
+        this.$emit('error', error)
       },
       doUploadFile(formData, success, fail){
         const xhr = new XMLHttpRequest()
@@ -102,7 +119,7 @@
           success(xhr.response)
         }
         xhr.onerror = () => {
-          fail()
+          fail(xhr)
         }
         xhr.send(formData)
       },
